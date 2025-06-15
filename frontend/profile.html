@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль - GreenMarket</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/orders.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-container">
+                    <img src="images/logo.svg" alt="GreenMarket.kg">
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html#main">Главная</a>
+                <a href="index.html#advantages">Преимущества</a>
+                <a href="products.html">Продукция</a>
+                <a href="index.html#delivery">Доставка и оплата</a>
+                <a href="index.html#reviews">Отзывы</a>
+            </nav>
+            <div class="auth-section">
+                <div id="guest-section" style="display: none;">
+                    <a href="login.html" class="btn btn-login">Войти</a>
+                    <a href="register.html" class="btn btn-register">Регистрация</a>
+                </div>
+                <div id="user-section" style="display: none;">
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ccc'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E" alt="Профиль" class="user-avatar">
+                            <span class="user-name"></span>
+                        </div>
+                        <div class="profile-popup">
+                            <button class="edit-profile-btn" title="Редактировать профиль">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <div class="profile-header">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ccc'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E" alt="Профиль" class="profile-avatar">
+                                <div class="profile-info">
+                                    <h4 class="profile-name"></h4>
+                                    <p class="profile-email"></p>
+                                    <div class="profile-status">Онлайн</div>
+                                </div>
+                            </div>
+                            <ul class="profile-menu">
+                                <li><a href="#"><i class="fas fa-user"></i> Личный кабинет</a></li>
+                                <li><a href="#"><i class="fas fa-cog"></i> Настройки</a></li>
+                                <li><a href="#"><i class="fas fa-history"></i> Мои заказы</a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i> Избранное</a></li>
+                            </ul>
+                            <a class="logout-btn" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Выйти из аккаунта
+                                <div class="loading-spinner"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                    <div class="cart-popup">
+                        <div class="cart-items">
+                            <!-- Здесь будут отображаться товары -->
+                        </div>
+                        <div class="cart-actions">
+                            <button class="checkout-btn" onclick="cart.checkout()">
+                                <i class="fas fa-shopping-bag"></i>
+                                Оформить заказ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="profile-page">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h1>Профиль пользователя</h1>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-sidebar">
+                    <div class="user-info">
+                        <div class="avatar-container">
+                            <img id="userAvatar" src="images/default-avatar.png" alt="Аватар пользователя" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23f8f9fa%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-family%3D%22Arial%22%20font-size%3D%2272%22%20fill%3D%22%23adb5bd%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%3F%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
+                        <h2 id="userName">Имя пользователя</h2>
+                        <p id="userEmail">email@example.com</p>
+                    </div>
+                    
+                    <nav class="profile-nav">
+                        <button class="nav-item active" data-section="profile">Профиль</button>
+                        <button class="nav-item" data-section="orders">Мои заказы</button>
+                        <button class="nav-item" data-section="settings">Настройки</button>
+                    </nav>
+                </div>
+                
+                <div class="profile-main">
+                    <!-- Секция профиля -->
+                    <section id="profile-section" class="profile-section active">
+                        <h2>Информация профиля</h2>
+                        <form id="profileForm" class="profile-form">
+                            <div class="form-group">
+                                <label for="name">Имя</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required readonly>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Телефон</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="avatar">Аватар</label>
+                                <input type="file" id="avatar" name="avatar" accept="image/*">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        </form>
+                    </section>
+                    
+                    <!-- Секция заказов -->
+                    <section id="orders-section" class="profile-section">
+                        <h2>История заказов</h2>
+                        <div id="ordersContainer" class="orders-container">
+                            <!-- Здесь будут отображаться заказы -->
+                        </div>
+                        <div id="pagination" class="pagination">
+                            <!-- Здесь будет пагинация -->
+                        </div>
+                    </section>
+                    
+                    <!-- Секция настроек -->
+                    <section id="settings-section" class="profile-section">
+                        <h2>Настройки аккаунта</h2>
+                        <form id="settingsForm" class="settings-form">
+                            <div class="form-group">
+                                <label for="currentPassword">Текущий пароль</label>
+                                <input type="password" id="currentPassword" name="currentPassword">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newPassword">Новый пароль</label>
+                                <input type="password" id="newPassword" name="newPassword">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmPassword">Подтвердите пароль</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Изменить пароль</button>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно деталей заказа -->
+    <div id="order-details-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Детали заказа #<span id="order-number"></span></h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="order-info">
+                    <div class="info-group">
+                        <label>Дата заказа:</label>
+                        <span id="order-date"></span>
+                    </div>
+                    <div class="info-group">
+                        <label>Статус:</label>
+                        <span id="order-status" class="status-badge"></span>
+                    </div>
+                    <div class="info-group">
+                        <label>Способ оплаты:</label>
+                        <span id="payment-method"></span>
+                    </div>
+                    <div class="info-group">
+                        <label>Адрес доставки:</label>
+                        <span id="delivery-address"></span>
+                    </div>
+                    <div class="info-group">
+                        <label>Телефон:</label>
+                        <span id="order-phone"></span>
+                    </div>
+                </div>
+                <div class="order-items-list">
+                    <h3>Товары в заказе</h3>
+                    <div id="order-items"></div>
+                </div>
+                <div class="order-total">
+                    <div class="total-row">
+                        <span>Подытог:</span>
+                        <span id="subtotal"></span>
+                    </div>
+                    <div class="total-row">
+                        <span>Доставка:</span>
+                        <span id="delivery-cost"></span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Итого:</span>
+                        <span id="grand-total"></span>
+                    </div>
+                </div>
+                <div class="order-actions">
+                    <button id="cancel-order-btn" class="btn btn-danger" style="display: none;">
+                        Отменить заказ
+                    </button>
+                    <button id="print-order-btn" class="btn btn-secondary">
+                        <i class="fas fa-print"></i> Распечатать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GreenMarket</h3>
+                <p>Ваш надежный партнер в мире экологичных продуктов</p>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p>Email: info@greenmarket.com</p>
+                <p>Телефон: +7 (999) 123-45-67</p>
+            </div>
+            <div class="footer-section">
+                <h3>Мы в соцсетях</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">Instagram</a>
+                    <a href="#" class="social-link">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 GreenMarket. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/profile.js"></script>
+    <script type="module" src="js/orders.js"></script>
+    <script>
+        // Обработка хэша в URL для автоматического открытия нужного раздела
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash;
+            if (hash) {
+                const section = hash.substring(1); // Убираем # из хэша
+                const menuItem = document.querySelector(`.menu-item[data-section="${section}"]`);
+                if (menuItem) {
+                    // Закрываем все секции
+                    document.querySelectorAll('.profile-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.querySelectorAll('.menu-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Открываем нужную секцию
+                    const targetSection = document.getElementById(`${section}-section`);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                        menuItem.classList.add('active');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

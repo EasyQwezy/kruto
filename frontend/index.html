@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Sayfa</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Основные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Стили для main-banner */
+        .main-banner {
+            background-image: url('./images/foto.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 600px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .main-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .main-banner .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .callback-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 25px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .callback-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .callback-btn .btn-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .callback-btn a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .pulse-on-hover:hover {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .hover-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hover-video:hover {
+            transform: scale(1.03);
+        }
+
+        .reviews-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .reviews-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .reviews-slider-wrapper {
+            position: relative;
+            width: 100%;
+            padding: 0 40px;
+            margin: 0 auto;
+        }
+
+        .reviews-slider {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .reviews-list {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease;
+            padding: 20px 0;
+        }
+
+        .video-container {
+            flex: 0 0 calc(33.333% - 14px);
+            min-width: 300px;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .hover-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hover-video:hover {
+            transform: scale(1.03);
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .slider-btn:hover {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .slider-btn-prev {
+            left: 0;
+        }
+
+        .slider-btn-next {
+            right: 0;
+        }
+
+        @media (max-width: 1200px) {
+            .video-container {
+                flex: 0 0 calc(50% - 10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-container {
+                flex: 0 0 100%;
+            }
+            
+            .reviews-slider-wrapper {
+                padding: 0 30px;
+            }
+        }
+
+        .products-section {
+            padding: 80px 0;
+            background-color: var(--light-green);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        /* Стили для секции товаров */
+        .featured-products {
+            padding: 60px 0;
+            background-color: #f9f9f9;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .product-info .price {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2ecc71;
+            margin: 10px 0;
+        }
+
+        .product-info .description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .order-btn {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .order-btn:hover {
+            background: #27ae60;
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 2rem;
+            background: #fff3f3;
+            border-radius: 12px;
+            border: 1px solid #ffcdd2;
+            margin: 2rem 0;
+        }
+
+        .error-message p {
+            color: #d32f2f;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .retry-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background: #388E3C;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .auth-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-profile:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .user-profile:hover .user-avatar {
+            border-color: #2ecc71;
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .user-name {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-right: 20px;
+        }
+
+        .user-name::after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile:hover .user-name::after {
+            transform: translateY(-50%) rotate(180deg);
+            color: #2ecc71;
+        }
+
+        .profile-popup {
+            position: absolute;
+            top: calc(100% + 15px);
+            right: 0;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            padding: 25px;
+            min-width: 300px;
+            display: none;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-popup.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .profile-popup::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 30px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            transform: rotate(45deg);
+            border-left: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .profile-header img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #2ecc71;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h4 {
+            margin: 0;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .profile-status {
+            font-size: 12px;
+            color: #2ecc71;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .profile-status::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #2ecc71;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+        }
+
+        .profile-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile-menu li {
+            margin-bottom: 10px;
+        }
+
+        .profile-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #333;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .profile-menu a:hover {
+            background: #f8f9fa;
+            color: #2ecc71;
+            transform: translateX(5px);
+        }
+
+        .profile-menu i {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .profile-menu a:hover i {
+            color: #2ecc71;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e74c3c;
+            text-decoration: none;
+            padding: 15px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .logout-btn:hover {
+            background: #fff5f5;
+            color: #c0392b;
+        }
+
+        .logout-btn i {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .edit-profile-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .edit-profile-btn:hover {
+            background: #2ecc71;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #e74c3c;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .faq-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .faq-item:nth-child(even) {
+            animation-delay: 0.1s;
+        }
+
+        .faq-item:nth-child(odd) {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-container">
+                    <img src="images/logo.svg" alt="GreenMarket.kg">
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="#main">Ana Sayfa</a>
+                <a href="#advantages">Avantajlar</a>
+                <a href="products.html">Ürünler</a>
+                <a href="#delivery">Teslimat ve Ödeme</a>
+                <a href="#reviews">Yorumlar</a>
+            </nav>
+            <div class="auth-section">
+                <div id="guest-section" style="display: none;">
+                    <button class="callback-btn pulse-on-hover">
+                        <a href="login.html">
+                            <div class="btn-content">
+                                <span>войти</span>
+                            </div>
+                        </a>
+                        <div class="ripple-effect"></div>
+                    </button>
+                </div>
+                <div id="user-section" style="display: none;">
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ccc'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E" alt="Профиль" class="user-avatar">
+                            <span class="user-name"></span>
+                        </div>
+                        <div class="profile-popup">
+                            <button class="edit-profile-btn" title="Редактировать профиль">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <div class="profile-header">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ccc'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E" alt="Профиль" class="profile-avatar">
+                                <div class="profile-info">
+                                    <h4 class="profile-name"></h4>
+                                    <p class="profile-email"></p>
+                                    <div class="profile-status">Online</div>
+                                </div>
+                            </div>
+                            <ul class="profile-menu">
+                                <li><a href="#"><i class="fas fa-user"></i> Profilim</a></li>
+                                <li><a href="#"><i class="fas fa-cog"></i> Ayarlar</a></li>
+                                <li><a href="#"><i class="fas fa-history"></i> Siparişlerim</a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i> Favorilerim</a></li>
+                            </ul>
+                            <a class="logout-btn" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+                                <div class="loading-spinner"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                    <div class="cart-popup">
+                        <div class="cart-items">
+                            <!-- Здесь будут отображаться товары -->
+                        </div>  
+                        <div class="cart-actions">
+                            <button class="checkout-btn" onclick="cart.checkout()">
+                                <i class="fas fa-shopping-bag"></i>
+                                Оформить заказ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Banner -->
+    <section class="main-banner">
+        <div class="banner-content">
+            <h1 class="banner-title">Toksinkere ve Şüpheli Şeyler - Hayır!</h1>
+            <p class="banner-subtitle">GreenMarket.kg ile yeni bir yaşamın keyfini çıkarın, enerji ve sağlık için dektoks programını deneyin</p>
+            <div class="banner-buttons">
+                <a href="#products" class="banner-button primary">Ürünleri Görüntüle</a>
+            </div>
+        </div>
+        <div class="banner-bg">
+            <div class="banner-circle"></div>
+            <div class="banner-circle"></div>
+            <div class="banner-circle"></div>
+        </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section id="advantages" class="advantages">
+        <div class="container">
+            <h2 class="advantages-title">Avantajlarımız:</h2>
+            <div class="advantages-list">
+                <div class="advantage-item">
+                    <div class="advantage-icon">
+                        <img src="/frontend/images/1иконка.png" alt="Доставка" width="80" height="80" />
+                    </div>
+                    <div class="advantage-text">Taze ürünleri hazırlar ve program süresince her gün teslim ederiz.</div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">
+                        <img src="/frontend/images/2иконка.png" alt="Фрукты в корзине" width="80" height="80" />
+                    </div>
+                    <div class="advantage-text">Soğuk sıkıştırılmış meyve suyu ve smoothie içecekleri: 90% daha fazla vitamin.</div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">
+                        <img src="/frontend/images/3иконка.png" alt="Здравоохранение" width="80" height="80" />
+                    </div>
+                    <div class="advantage-text">Tariflerimiz, diyetisyen-nutricyen yardımıyla geliştirilmiştir.</div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">
+                        <!-- 100% SVG -->
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="38" stroke="#4CAF50" stroke-width="2"/><text x="40" y="48" text-anchor="middle" font-size="24" fill="#4CAF50" font-family="Arial" font-weight="bold">100%</text></svg>
+                    </div>
+                    <div class="advantage-text">Doğal bileşenler. Şeker, boyama ve konserve için yok.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="programs">
+        <div class="container">
+            <h2 class="programs-title">Dektoks Programları:</h2>
+            <div class="programs-slider-wrapper">
+                <button class="slider-btn slider-btn-prev" aria-label="Назад">&#8592;</button>
+                <div class="programs-slider">
+                    <div class="programs-list">
+                        <div class="program-card">
+                            <img src="images/fresh-juices.png" alt="Бодрость" class="program-img">
+                            <div class="program-info">
+                                <h3><span class="program-green">«ENERJİ» PROGRAMI</span> 1 GÜN</h3>
+                                <p>1 günlük hızlı detoks. Süre kısa görünse de mükemmel bir etki sağlar</p>
+                                <div class="program-price">1350 SOM</div>
+                                <a href="#" class="program-btn">Detaylar</a>
+                            </div>
+                        </div>
+                        <div class="program-card">
+                            <img src="images/imagesingredient2.png" alt="Parlaklık" class="program-img">
+                            <div class="program-info">
+                                <h3><span class="program-green">«PARLAKLIK» PROGRAMI</span> 3 GÜN</h3>
+                                <p>Rahatça arının ve aynı zamanda vitaminlerle doldurun</p>
+                                <div class="program-price">3700 SOM</div>
+                                <a href="#" class="program-btn">Detaylar</a>
+                            </div>
+                        </div>
+                        <div class="program-card">
+                            <img src="images/imagesingredient3.png" alt="5 yıldız" class="program-img">
+                            <div class="program-info">
+                                <h3><span class="program-green">«5 YILDIZ» PROGRAMI</span> 5 GÜN</h3>
+                                <p>Sağlık ve vücut bakımında gerçek 5 yıldızlı seviye.</p>
+                                <div class="program-price">5600 SOM</div>
+                                <a href="#" class="program-btn">Detaylar</a>
+                            </div>
+                        </div>
+                        <div class="program-card">
+                            <img src="images/fresh-juices.png" alt="Dönüşüm" class="program-img">
+                            <div class="program-info">
+                                <h3><span class="program-green">«DÖNÜŞÜM» PROGRAMI</span> 7 GÜN</h3>
+                                <p>Aynada kendinizi gördüğünüzde sizi özgüven ve tazelikle şaşırtacak tam bir detoks kursu.</p>
+                                <div class="program-price">7600 SOM</div>
+                                <a href="#" class="program-btn">Detaylar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-btn slider-btn-next" aria-label="Вперёд">&#8594;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2 class="reviews-title">Yorumlar</h2>
+            <div class="reviews-slider-wrapper">
+                <button class="slider-btn slider-btn-prev" aria-label="Назад">&#8592;</button>
+                <div class="reviews-slider">
+                    <div class="reviews-list">
+                        <div class="video-container">
+                            <video muted loop playsinline class="hover-video" preload="metadata">
+                                <source src="images/2.mp4" type="video/mp4">
+                                Tarayıcınız video desteklemiyor
+                            </video>
+                        </div>
+                        <div class="video-container">
+                            <video muted loop playsinline class="hover-video" preload="metadata">
+                                <source src="images/3.mp4" type="video/mp4">
+                                Tarayıcınız video desteklemiyor
+                            </video>
+                        </div>
+                        <div class="video-container">
+                            <video muted loop playsinline class="hover-video" preload="metadata">
+                                <source src="images/4.mp4" type="video/mp4">
+                                Tarayıcınız video desteklemiyor
+                            </video>
+                        </div>
+                        <div class="video-container">
+                            <video muted loop playsinline class="hover-video" preload="metadata">
+                                <source src="images/5.mp4" type="video/mp4">
+                                Tarayıcınız video desteklemiyor
+                            </video>
+                        </div>
+                        <div class="video-container">
+                            <video muted loop playsinline class="hover-video" preload="metadata">
+                                <source src="images/6.mp4" type="video/mp4">
+                                Tarayıcınız video desteklemiyor
+                            </video>
+                        </div>
+                        <div class="video-container">
+                            <video muted loop playsinline class="hover-video" preload="metadata">
+                                <source src="images/7.mp4" type="video/mp4">
+                                Tarayıcınız video desteklemiyor
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-btn slider-btn-next" aria-label="Вперёд">&#8594;</button>
+            </div>
+        </div>
+    </section>
+    <!-- End Reviews Section -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #48bb78, #38a169);
+            border-radius: 2px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+            gap: 20px;
+            align-items: start;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #48bb78, #38a169);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            line-height: 1.4;
+        }
+
+        .faq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+
+        .faq-icon::before {
+            content: '+';
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+
+        .faq-answer p {
+            color: #4a5568;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(72, 187, 120, 0.1) 0%, rgba(72, 187, 120, 0.2) 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .faq-item {
+                padding: 20px;
+            }
+            
+            .faq-question {
+                font-size: 1rem;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .faq-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .faq-item:nth-child(even) {
+            animation-delay: 0.1s;
+        }
+
+        .faq-item:nth-child(odd) {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <section class="faq-section">
+        <div class="container">
+            <h1 class="title">Sıkça Sorulan Sorular:</h1>
+            
+            <div class="faq-grid">
+            <div class="faq-item">
+                <div class="faq-question">
+                    Dektoks nedir?
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="highlight">Dektoks</span> — bu, toksinler ve şüpheli şeylerden organizmı sıyırmak için bir kompleks programdır. Özel beslenme, doğal meyve suyu içmek, bitkisel çaylar ve ekstraktlar, böbrekler ve diğer organların zararlı maddeleri etkili bir şekilde atmasına yardımcı olur.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Organizmın şüpheli şeylerle dolu olduğunu nasıl anlayabilirim?
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p>Önemli işaretler: sürekli yorgunluk, cilt sorunları, beslenme bozuklukları, sık sık baş ağrıları, immunitenin azalması, uyku kalitesinin düşük olması. Bu belirtilerden birkaçını görürseniz — <span class="highlight">dektoksa düşünün</span>.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Programların 1-3-5-7 günlük sonuçları nedir?
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>1 gün:</strong> beslenme bozukluklarının iyileşmesi<br>
+                    <strong>3 gün:</strong> enerji artışı, cilt temizliği<br>
+                    <strong>5 gün:</strong> uyku normalleşmesi, kilo verme<br>
+                    <strong>7 gün:</strong> <span class="highlight">kompleks temizlik</span>, genel kendini hissedilirlik artışı</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Bazı bileşenlerde alerji var mı?
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p>Programa başlamadan önce tüm alerjik reaksiyonları bildirin. <span class="highlight">Özel bir program</span> seçeceğiz, zararlı bileşenleri değiştireceğiz.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Dektoks programına kimler uygun değil?
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p>Karşıtı: hamilelik ve sütlenme, ciddi kronik hastalıklar, şeker hastalığı, beslenme bozuklukları. <span class="highlight">Doktorla görüşme</span> program başlamadan önce.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Hamile ve sütlenme kadınları için programlar
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p>Hamile ve sütlenme kadınları için <span class="highlight">özel yumuşak programlar</span> sunuyoruz, organizma desteği için tam beslenme ve vitaminizasyon, aşırı temizlik olmadan.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Dektoks programı erkekler için uygun mu?
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p>Kesinlikle! Erkekler için <span class="highlight">özel programlar</span> var, erkek metabolizmasının özelliklerini dikkate alır, protein ve enerji ihtiyaçlarını artırır. Dektoks tümü için aynı etkili.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Sütlenme kadınları için programlar
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p>Sütlenme kadınları için <span class="highlight">yumuşak doğal temizlik programları</span> var. İlk günlerde içeceklerin etkisi nedeniyle kasılma veya diğer belirtiler olabilir, bu normal bir organizma dektoksta tepkisidir.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Dektoks programı sırasında antrenman
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p>Öneririz <span class="highlight">hafif fiziksel aktiviteler</span>: yoga, yürüyüş, esneme. Yoğun egzersizleri program süresince ertelemek daha iyi, çünkü organizma temizlik süreçleri için enerji yönlendirir.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Dektoks programına hazırlık
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p>2-3 gün önce: alkollü içecekleri, kafeini ve yağlı yiyecekleri kesin. Su tüketimini artırın. <span class="highlight">Psikolojik olarak hazır olun</span> — dektoks motivasyon ve disiplin gerektirir.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Dektoks programından nasıl çıkılır
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="highlight">Yavaş yavaş</span> alışılmış ürünleri geri getirin. İlk günler: hafif sebzeler ve meyveler, sonra pirinç, zeytinyağlı et. Aşırı ağır yiyeceklere geçmeyi önleyin.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Ödeme ve teslimat
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <p>Tüm ödeme türlerini kabul ediyoruz: kartlar, nakit, havale. <span class="highlight">Ücretsiz teslimat</span> şehir içinde siparişler için. Sipariş günü veya bir sonraki gün teslimat.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End FAQ Section -->
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>İletişim</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +996 (555) 123-456</li>
+                        <li><i class="fas fa-envelope"></i> info@greenmarket.kg</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Bishkek, Kyrgyzstan</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Мы в соцсетях</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Bilgi</h3>
+                    <ul>
+                        <li><a href="#delivery">Teslimat</a></li>
+                        <li><a href="#payment">Ödeme</a></li>
+                        <li><a href="#privacy">Gizlilik Politikası</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GreenMarket.kg. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Callback Modal -->
+    <div id="callback" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Sipariş Ver</h3>
+            <form class="callback-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Ваше имя" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Номер телефона" required>
+                </div>
+                <button type="submit" class="btn-primary">Sipariş Ver</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="js/profile.js"></script>
+    <script src="js/cart.js"></script>
+    
+    <!-- FAQ Section Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Закрываем все остальные элементы
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Переключаем текущий элемент
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+
+    <!-- Programs Slider Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.programs-list');
+            const prevBtn = document.querySelector('.programs-slider-wrapper .slider-btn-prev');
+            const nextBtn = document.querySelector('.programs-slider-wrapper .slider-btn-next');
+            const cards = document.querySelectorAll('.program-card');
+            
+            let currentPosition = 0;
+            const cardWidth = cards[0].offsetWidth + 30; // 30px - это gap между карточками
+            const cardsPerView = window.innerWidth > 1200 ? 3 : window.innerWidth > 768 ? 2 : 1;
+            const maxPosition = -(cards.length - cardsPerView) * cardWidth;
+
+            function updateSlider() {
+                slider.style.transform = `translateX(${currentPosition}px)`;
+                
+                // Обновляем состояние кнопок
+                prevBtn.style.opacity = currentPosition === 0 ? '0.5' : '1';
+                nextBtn.style.opacity = currentPosition <= maxPosition ? '0.5' : '1';
+            }
+
+            // Обработчики для кнопок
+            prevBtn.addEventListener('click', () => {
+                if (currentPosition < 0) {
+                    currentPosition = Math.min(currentPosition + cardWidth, 0);
+                    updateSlider();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentPosition > maxPosition) {
+                    currentPosition = Math.max(currentPosition - cardWidth, maxPosition);
+                    updateSlider();
+                }
+            });
+
+            // Обработка изменения размера окна
+            window.addEventListener('resize', () => {
+                const newCardsPerView = window.innerWidth > 1200 ? 3 : window.innerWidth > 768 ? 2 : 1;
+                if (newCardsPerView !== cardsPerView) {
+                    currentPosition = 0;
+                    updateSlider();
+                }
+            });
+
+            // Инициализация слайдера
+            updateSlider();
+        });
+    </script>
+
+    <!-- Reviews Slider Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.reviews-list');
+            const prevBtn = document.querySelector('.reviews-slider-wrapper .slider-btn-prev');
+            const nextBtn = document.querySelector('.reviews-slider-wrapper .slider-btn-next');
+            const videos = document.querySelectorAll('.video-container');
+            
+            let currentPosition = 0;
+            const videoWidth = videos[0].offsetWidth + 20; // 20px - это gap между видео
+            const videosPerView = window.innerWidth > 1200 ? 3 : window.innerWidth > 768 ? 2 : 1;
+            const maxPosition = -(videos.length - videosPerView) * videoWidth;
+
+            // Функция для управления воспроизведением видео
+            function handleVideoPlayback() {
+                videos.forEach(video => {
+                    const videoElement = video.querySelector('video');
+                    if (videoElement) {
+                        // Останавливаем все видео
+                        videoElement.pause();
+                        videoElement.currentTime = 0;
+                    }
+                });
+            }
+
+            function updateSlider() {
+                slider.style.transform = `translateX(${currentPosition}px)`;
+                
+                // Обновляем состояние кнопок
+                prevBtn.style.opacity = currentPosition === 0 ? '0.5' : '1';
+                nextBtn.style.opacity = currentPosition <= maxPosition ? '0.5' : '1';
+
+                // Останавливаем воспроизведение при переключении
+                handleVideoPlayback();
+            }
+
+            // Обработчики для кнопок
+            prevBtn.addEventListener('click', () => {
+                if (currentPosition < 0) {
+                    currentPosition = Math.min(currentPosition + videoWidth, 0);
+                    updateSlider();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentPosition > maxPosition) {
+                    currentPosition = Math.max(currentPosition - videoWidth, maxPosition);
+                    updateSlider();
+                }
+            });
+
+            // Обработка наведения на видео
+            videos.forEach(video => {
+                const videoElement = video.querySelector('video');
+                if (videoElement) {
+                    video.addEventListener('mouseenter', () => {
+                        videoElement.play();
+                    });
+                    
+                    video.addEventListener('mouseleave', () => {
+                        videoElement.pause();
+                        videoElement.currentTime = 0;
+                    });
+                }
+            });
+
+            // Обработка изменения размера окна
+            window.addEventListener('resize', () => {
+                const newVideosPerView = window.innerWidth > 1200 ? 3 : window.innerWidth > 768 ? 2 : 1;
+                if (newVideosPerView !== videosPerView) {
+                    currentPosition = 0;
+                    updateSlider();
+                }
+            });
+
+            // Инициализация слайдера
+            updateSlider();
+        });
+    </script>
+</body>
+</html>

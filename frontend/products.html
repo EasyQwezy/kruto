@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürünler - GreenMarket.kg</title>
+    <link rel="icon" type="image/x-icon" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --primary-dark: #27ae60;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --background-light: #f7fafc;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .products-container {
+            flex: 1 0 auto;
+            padding: 80px 0 40px;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-top: 45px;
+
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            border-radius: 2px;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 40px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            color: var(--text-dark);
+            background-color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-group select:hover {
+            border-color: var(--primary-color);
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .product-description {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .order-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .order-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .order-btn i {
+            font-size: 18px;
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 2rem;
+            background: #fff3f3;
+            border-radius: var(--radius-md);
+            border: 1px solid #ffcdd2;
+            margin: 2rem 0;
+        }
+
+        .error-message p {
+            color: #d32f2f;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .retry-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .no-products p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .products-container {
+                padding: 60px 0 20px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .filters {
+                padding: 15px;
+            }
+
+            .filter-group {
+                min-width: 100%;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .product-image {
+                height: 200px;
+            }
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .product-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .product-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .product-card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .footer {
+            flex-shrink: 0;
+            background-color: var(--text-dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        .guest-notice {
+            background: #fff3e0;
+            border: 1px solid #ffe0b2;
+            border-radius: var(--radius-sm);
+            padding: 12px 20px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .guest-notice p {
+            color: #e65100;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guest-notice a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .guest-notice a:hover {
+            text-decoration: underline;
+        }
+
+        .product-card .order-btn.guest {
+            background: #e0e0e0;
+            cursor: not-allowed;
+        }
+
+        .product-card .order-btn.guest:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .product-card .order-btn.guest::after {
+            content: '🔒';
+            margin-left: 8px;
+        }
+
+        .user-features {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .favorite-btn, .history-btn {
+            background: white;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn:hover, .history-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .product-card .favorite-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            z-index: 2;
+        }
+
+        .product-card .favorite-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .product-card .favorite-icon.active {
+            color: #e74c3c;
+        }
+
+        .product-card .favorite-icon.active i {
+            animation: heartBeat 0.3s ease;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        .order-btn.user {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-btn.user::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .order-btn.user:hover::before {
+            left: 100%;
+        }
+
+        .cart-actions {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .checkout-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .checkout-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .checkout-btn i {
+            font-size: 18px;
+        }
+
+        .cart-popup {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 350px;
+            background: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: 15px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .cart-popup.active {
+            display: block;
+        }
+
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            margin-right: 10px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cart-item-quantity button {
+            background: var(--background-light);
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-item-quantity button:hover {
+            background: #e2e8f0;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #e53e3e;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 0 5px;
+        }
+
+        .remove-item:hover {
+            color: #c53030;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            overflow-y: auto;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease;
+        }
+
+        .modal[style*="display: block"] {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 50px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal[style*="display: block"] .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 5px;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--text-dark);
+        }
+
+        .order-summary {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--background-light);
+            border-radius: var(--radius-sm);
+        }
+
+        #checkout-items {
+            margin: 15px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checkout-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-total {
+            margin-top: 15px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 1.2em;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .submit-order-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .submit-order-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .submit-order-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 20px auto;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-container">
+                    <img src="images/logo.svg" alt="GreenMarket.kg">
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html#main">Ana Sayfa</a>
+                <a href="index.html#advantages">Avantajlar</a>
+                <a href="products.html">Ürünler</a>
+                <a href="index.html#delivery">Teslimat ve Ödeme</a>
+                <a href="index.html#reviews">Yorumlar</a>
+            </nav>
+            <div class="auth-section">
+                <div id="guest-section" style="display: none;">
+                    <a href="login.html" class="btn btn-login">Giriş Yap</a>
+                    <a href="register.html" class="btn btn-register">Kayıt Ol</a>
+                </div>
+                <div id="user-section" style="display: none;">
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ccc'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E" alt="Профиль" class="user-avatar">
+                            <span class="user-name"></span>
+                        </div>
+                        <div class="profile-popup">
+                            <button class="edit-profile-btn" title="Редактировать профиль">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <div class="profile-header">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ccc'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E" alt="Профиль" class="profile-avatar">
+                                <div class="profile-info">
+                                    <h4 class="profile-name"></h4>
+                                    <p class="profile-email"></p>
+                                    <div class="profile-status">Онлайн</div>
+                                </div>
+                            </div>
+                            <ul class="profile-menu">
+                                <li><a href="#"><i class="fas fa-user"></i> Profilim</a></li>
+                                <li><a href="#"><i class="fas fa-cog"></i> Ayarlar</a></li>
+                                <li><a href="#"><i class="fas fa-history"></i> Siparişlerim</a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i> Favorilerim</a></li>
+                            </ul>
+                            <a class="logout-btn" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+                                <div class="loading-spinner"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                    <div class="cart-popup">
+                        <div class="cart-items">
+                            <!-- Здесь будут отображаться товары -->
+                        </div>
+                        <div class="cart-actions">
+                            <button class="checkout-btn" onclick="cart.checkout()">
+                                <i class="fas fa-shopping-bag"></i>
+                                Sipariş Oluştur
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section class="products-container">
+        <div class="container">
+            <h1 class="page-title">Ürünlerimiz</h1>
+            
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="sort">Sıralama</label>
+                    <select id="sort">
+                        <option value="name_asc">Adına göre (A-Z)</option>
+                        <option value="name_desc">Adına göre (Z-A)</option>
+                            <option value="price_asc">Fiyata göre (Artan)</option>
+                        <option value="price_desc">Fiyata göre (Azalan)</option>
+                    </select>
+                </div>
+                <div class="user-features" style="display: none;">
+                    <button class="favorite-btn" title="Показать избранное">
+                        <i class="fas fa-heart"></i> Favorileri Görüntüle
+                    </button>
+                    <button class="history-btn" title="История заказов">
+                        <i class="fas fa-history"></i> Siparişlerim
+                    </button>
+                </div>
+                <div class="guest-notice" style="display: none;">
+                    <p><i class="fas fa-info-circle"></i> Ürünleri sipariş vermek için <a href="login.html">giriş yapın</a></p>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="products-error" class="error-message" style="display: none;"></div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="products-container">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="images/placeholder.jpg" alt="Продукт 1">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Продукт 1</h3>
+                        <p class="product-description">Описание продукта 1</p>
+                        <div class="product-price">1000 ₽</div>
+                        <button class="order-btn" onclick="addToCart(1)">
+                            <i class="fas fa-shopping-cart"></i>
+                            Заказать
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="images/placeholder.jpg" alt="Продукт 2">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Продукт 2</h3>
+                        <p class="product-description">Описание продукта 2</p>
+                        <div class="product-price">2000 ₽</div>
+                        <button class="order-btn" onclick="addToCart(2)">
+                            <i class="fas fa-shopping-cart"></i>
+                            Заказать
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="images/placeholder.jpg" alt="Продукт 3">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Продукт 3</h3>
+                        <p class="product-description">Описание продукта 3</p>
+                        <div class="product-price">3000 ₽</div>
+                        <button class="order-btn" onclick="addToCart(3)">
+                            <i class="fas fa-shopping-cart"></i>
+                            Заказать
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>İletişim</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +996 (555) 123-456</li>
+                        <li><i class="fas fa-envelope"></i> info@greenmarket.kg</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Bishkek, Kyrgyzstan</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Biz sosyal medyada</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Информация</h3>
+                    <ul>
+                        <li><a href="#delivery">Teslimat</a></li>
+                        <li><a href="#payment">Ödeme</a></li>
+                        <li><a href="#privacy">Gizlilik Politikası</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GreenMarket.kg. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно оформления заказа -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sipariş Oluştur</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="order-summary">
+                    <h3>Siparişiniz</h3>
+                    <div id="checkout-items"></div>
+                    <div class="order-total">
+                        <p>Toplam: <span id="checkout-total">0</span> ₽</p>
+                    </div>
+                </div>
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label for="delivery-address">Teslimat Adresi</label>
+                        <textarea id="delivery-address" required placeholder="Teslimat adresini giriniz"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">İletişim Telefonu</label>
+                        <input type="tel" id="phone" required placeholder="+996 (___) ___-__-__">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">Sipariş Notu</label>
+                        <textarea id="comment" placeholder="Sipariş notu"></textarea>
+                    </div>
+                    <div class="payment-info">
+                        <p><i class="fas fa-info-circle"></i> Ödeme nakit ile teslimat sırasında yapılır</p>
+                    </div>
+                    <button type="submit" class="submit-order-btn">Siparişi Onayla</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script type="module" src="js/profile.js"></script>
+</body>
+</html>
