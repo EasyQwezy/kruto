@@ -1037,6 +1037,160 @@
 
     <script src="js/products.js"></script>
     <script src="js/cart.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb2xBTWGMpm1FSbRBp04zyptzDhFivtWU",
+            authDomain: "greenmarket-166c9.firebaseapp.com",
+            projectId: "greenmarket-166c9",
+            storageBucket: "greenmarket-166c9.firebasestorage.app",
+            messagingSenderId: "1050311298642",
+            appId: "1:1050311298642:web:b483089f1549d0879bd98b",
+            measurementId: "G-4NZSRVXQM1"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Check authentication state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                document.getElementById('guest-section').style.display = 'none';
+                document.getElementById('user-section').style.display = 'flex';
+                document.querySelector('.user-name').textContent = user.displayName || user.email;
+                document.querySelector('.profile-name').textContent = user.displayName || user.email;
+                document.querySelector('.profile-email').textContent = user.email;
+                document.querySelector('.user-features').style.display = 'flex';
+                document.querySelector('.guest-notice').style.display = 'none';
+            } else {
+                // User is signed out
+                document.getElementById('guest-section').style.display = 'flex';
+                document.getElementById('user-section').style.display = 'none';
+                document.querySelector('.user-features').style.display = 'none';
+                document.querySelector('.guest-notice').style.display = 'block';
+            }
+        });
+
+        // Modify cart checkout function
+        window.cart = {
+            checkout: function() {
+                // Use onAuthStateChanged to ensure we have the latest auth state
+                onAuthStateChanged(auth, (user) => {
+                    console.log('Auth state changed - Current user:', user);
+                    
+                    if (!user) {
+                        console.log('No user found, redirecting to login');
+                        alert('Lütfen önce giriş yapın');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    console.log('User authenticated, showing checkout modal');
+                    const modal = document.getElementById('checkout-modal');
+                    modal.style.display = 'block';
+                    
+                    // Update checkout items
+                    const cartItems = document.querySelector('.cart-items');
+                    const checkoutItems = document.getElementById('checkout-items');
+                    checkoutItems.innerHTML = cartItems.innerHTML;
+                    
+                    // Update total
+                    const total = document.querySelector('.cart-count').textContent;
+                    document.getElementById('checkout-total').textContent = total;
+                });
+            }
+        };
+
+        // Handle checkout form submission
+        document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const user = auth.currentUser;
+            console.log('Form submission - Current user:', user); // Debug log
+            
+            if (!user) {
+                console.log('No user found during form submission'); // Debug log
+                alert('Lütfen önce giriş yapın');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                console.log('Processing order for user:', user.email); // Debug log
+                const cartItems = document.querySelector('.cart-items');
+                const items = Array.from(cartItems.children).map(item => {
+                    return {
+                        name: item.querySelector('h4').textContent,
+                        quantity: parseInt(item.querySelector('.cart-item-quantity span').textContent),
+                        price: parseFloat(item.querySelector('.cart-item-details').textContent.match(/\d+/)[0])
+                    };
+                });
+
+                const orderData = {
+                    userId: user.uid,
+                    userEmail: user.email,
+                    items: items,
+                    totalAmount: parseFloat(document.getElementById('checkout-total').textContent),
+                    deliveryAddress: document.getElementById('delivery-address').value,
+                    phone: document.getElementById('phone').value,
+                    comment: document.getElementById('comment').value,
+                    status: 'pending',
+                    createdAt: serverTimestamp()
+                };
+
+                console.log('Saving order data:', orderData); // Debug log
+
+                // Save order to Firestore
+                const ordersRef = collection(db, 'orders');
+                await addDoc(ordersRef, orderData);
+
+                console.log('Order saved successfully'); // Debug log
+
+                // Clear cart and close modal
+                document.querySelector('.cart-items').innerHTML = '';
+                document.querySelector('.cart-count').textContent = '0';
+                document.getElementById('checkout-modal').style.display = 'none';
+                
+                // Show success message
+                alert('Siparişiniz başarıyla oluşturuldu!');
+                
+                // Reset form
+                document.getElementById('checkout-form').reset();
+            } catch (error) {
+                console.error('Sipariş oluşturulurken hata oluştu:', error);
+                alert('Sipariş oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.');
+            }
+        });
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await auth.signOut();
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Çıkış yapılırken hata oluştu:', error);
+            }
+        });
+
+        // Close modal when clicking the close button
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            document.getElementById('checkout-modal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('checkout-modal');
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
     <script type="module" src="js/profile.js"></script>
 </body>
 </html>

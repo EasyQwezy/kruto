@@ -530,14 +530,14 @@
                 })
                 .then(() => {
                     // Успешное сохранение данных
-                    showSuccess('Kayıt başarılı! Yönlendiriliyor...');
+                    showSuccess('Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...');
                     
                     // Очищаем форму
                     document.getElementById('registerForm').reset();
                     
-                    // Перенаправление на главную страницу
+                    // Перенаправление на страницу входа
                     setTimeout(() => {
-                        window.location.replace('index.html');
+                        window.location.replace('login.html');
                     }, 2000);
                 })
                 .catch((error) => {

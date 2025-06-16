@@ -108,10 +108,26 @@ const cart = {
             return;
         }
 
+        // Проверяем авторизацию пользователя
+        const userData = JSON.parse(localStorage.getItem('user'));
+        console.log('Checking user authentication:', userData);
+        
+        if (!userData || !userData.id) {
+            console.log('User not authenticated, redirecting to login page');
+            this.showNotification('Необходимо войти в систему', 'error');
+            window.location.href = 'login.html';
+            return;
+        }
+
         // Заполняем модальное окно данными
         const checkoutItems = document.getElementById('checkout-items');
         const checkoutTotal = document.getElementById('checkout-total');
         
+        if (!checkoutItems || !checkoutTotal) {
+            console.error('Checkout modal elements not found');
+            return;
+        }
+
         checkoutItems.innerHTML = items.map(item => `
             <div class="checkout-item">
                 <span>${item.name}</span>
@@ -123,24 +139,34 @@ const cart = {
 
         // Показываем модальное окно
         const modal = document.getElementById('checkout-modal');
+        if (!modal) {
+            console.error('Checkout modal not found');
+            return;
+        }
         modal.style.display = 'block';
 
         // Обработчик отправки формы
         const form = document.getElementById('checkout-form');
+        if (!form) {
+            console.error('Checkout form not found');
+            return;
+        }
+
         form.onsubmit = async (e) => {
             e.preventDefault();
 
-            // Получаем данные пользователя из localStorage
-            const userData = JSON.parse(localStorage.getItem('user'));
-            console.log('User data from localStorage:', userData);
+            // Повторная проверка авторизации перед отправкой заказа
+            const currentUserData = JSON.parse(localStorage.getItem('user'));
+            console.log('Rechecking user authentication before order submission:', currentUserData);
             
-            if (!userData || !userData.id) {
-                this.showNotification('Необходимо войти в систему', 'error');
+            if (!currentUserData || !currentUserData.id) {
+                this.showNotification('Сессия истекла. Пожалуйста, войдите снова.', 'error');
+                window.location.href = 'login.html';
                 return;
             }
 
             const orderData = {
-                user_id: userData.id,
+                user_id: currentUserData.id,
                 total: total,
                 items: items.map(item => ({
                     product_id: item.productId,
